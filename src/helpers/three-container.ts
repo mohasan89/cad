@@ -1,4 +1,4 @@
-import { Scene, PerspectiveCamera, Camera, WebGLRenderer, BoxGeometry, Mesh, MeshStandardMaterial, AmbientLight, DirectionalLight } from "three";
+import { Scene, PerspectiveCamera, WebGLRenderer, BoxGeometry, Mesh, MeshStandardMaterial, AmbientLight, DirectionalLight } from "three";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
 
 export default class ThreeContainer {
@@ -23,20 +23,13 @@ export default class ThreeContainer {
         return this.scene;
     }
 
-    public getCamera(): Camera {
-        return this.camera;
-    }
-
     public initCanvas(canvasEl: HTMLCanvasElement): void {
         if (this.canvasRef) return
         this.canvasRef = canvasEl;
 
         this.sceneResize();
         this.setCameraInitialPositin();
-        setTimeout(() => {
-
-            this.addBox();
-        }, 1000)
+        setTimeout(() => { this.addBox() }, 1000)
         this.animate();
 
         this.addCanvasListners();
@@ -86,12 +79,10 @@ export default class ThreeContainer {
         })
     }
 
-
     private addLightSources(): void {
         const ambientLight = new AmbientLight(0xffffff, 1)
         const directionalLight = new DirectionalLight(0xffffff, 1)
         directionalLight.position.set(5, 5, 20)
         this.scene.add(ambientLight, directionalLight)
     }
-
 }
