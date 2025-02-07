@@ -1,4 +1,4 @@
-import { Scene, PerspectiveCamera, WebGLRenderer, BoxGeometry, Mesh, MeshStandardMaterial, AmbientLight, DirectionalLight } from "three";
+import { Scene, PerspectiveCamera, WebGLRenderer, BoxGeometry, Mesh, MeshStandardMaterial, AmbientLight, DirectionalLight, Material } from "three";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
 
 export default class ThreeContainer {
@@ -36,6 +36,17 @@ export default class ThreeContainer {
         this.addLightSources();
 
         this.canvasRef.appendChild(this.renderer.domElement);
+    }
+
+    public getMeshes(): Mesh[] {
+        return this.scene.children.filter((child) => child instanceof Mesh);
+    }
+
+    public resetScene(): void {
+        for (const mesh of this.getMeshes()) {
+            if (mesh.material instanceof Material) mesh.material.dispose()
+            this.scene.remove(mesh);
+        }
     }
 
     private sceneResize(): void {
