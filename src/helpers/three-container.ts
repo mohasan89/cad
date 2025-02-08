@@ -1,4 +1,4 @@
-import { Scene, PerspectiveCamera, WebGLRenderer, Mesh, AmbientLight, DirectionalLight, Material } from "three";
+import { Scene, PerspectiveCamera, WebGLRenderer, Mesh, AmbientLight, DirectionalLight, Material, Color } from "three";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
 import GeometryPrimitiveAdder from "./geometry-primitive-adder";
 import EnumPrimitive from "../types/primitive.enum";
@@ -31,6 +31,7 @@ export default class ThreeContainer {
 
         this.sceneResize();
         this.setCameraInitialPositin();
+        this.scene.background = new Color(0x171717)
         setTimeout(() => { GeometryPrimitiveAdder.addGeometry(EnumPrimitive.Box, 1, 1, 1, 5) }, 1000)
         this.animate();
 
@@ -76,7 +77,8 @@ export default class ThreeContainer {
     }
 
     private setCameraInitialPositin(): void {
-        this.camera.position.set(0, 0, 15);
+        this.camera.position.set(20, 20, 20);
+        this.camera.lookAt(0, 0, 0)
     }
 
     private animate(): void {
@@ -94,7 +96,7 @@ export default class ThreeContainer {
     }
 
     private addLightSources(): void {
-        const ambientLight = new AmbientLight(0xffffff, 0.3);
+        const ambientLight = new AmbientLight(0xffffff, 0.7);
         const directionalLight = new DirectionalLight(0xffffff, 2);
         directionalLight.position.set(100, 100, 100);
         this.scene.add(ambientLight, directionalLight);

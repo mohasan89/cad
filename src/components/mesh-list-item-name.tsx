@@ -2,7 +2,7 @@ import ThreeSelectHandler from "../helpers/three-select-handler";
 import { MeshListItemPropsType } from "./mesh-list-item";
 
 const MeshListItemName = ({ mesh, userData }: MeshListItemPropsType) => {
-  const clickHandler = () => ThreeSelectHandler.selectMesh(mesh)
+  const clickHandler = () => ThreeSelectHandler.selectMesh(mesh);
 
   return (
     <div className="w-full cursor-pointer" onClick={clickHandler}>

@@ -1,8 +1,9 @@
-import { BufferGeometry, Mesh, MeshStandardMaterial } from "three";
+import { BufferGeometry, Mesh } from "three";
 import ThreeContainer from "./three-container";
 import RandomColorPicker from "./random-color-picker";
 import EnumPrimitive from "../types/primitive.enum";
 import MeshUserDataType from "../types/mesh-usertype.type";
+import MaterialCache from "./material-cache";
 
 abstract class BasePrimitive {
     protected abstract bufferGeometry: BufferGeometry;
@@ -19,7 +20,7 @@ abstract class BasePrimitive {
 
     private getMesh(length: number, width: number, depth: number,name: string): Mesh {
         const color = RandomColorPicker.getRandomColor()
-        const material = this.getMaterial(color);
+        const material = MaterialCache.getMaterial(color);
         const mesh = new Mesh(this.bufferGeometry, material);
         mesh.scale.set(length, width, depth);
         mesh.receiveShadow = true;
@@ -28,10 +29,6 @@ abstract class BasePrimitive {
         mesh.position.set(...this.getRandomPosition(length, width, depth));
         mesh.userData = { ...this.defaultUserData, color, name } satisfies MeshUserDataType;
         return mesh;
-    }
-
-    private getMaterial(color: string): MeshStandardMaterial {
-        return new MeshStandardMaterial({ color });
     }
 
     private getRandomPosition(length: number, width: number, depth: number): [number, number, number] {

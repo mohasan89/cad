@@ -1,6 +1,7 @@
-import { Mesh, MeshStandardMaterial } from "three";
+import { Mesh } from "three";
 import ThreeContainer from "./three-container";
 import MeshUserDataType from "../types/mesh-usertype.type";
+import MaterialCache from "./material-cache";
 
 class ThreeSelectHandler {
     public static selectMesh(mesh: Mesh): void {
@@ -22,13 +23,13 @@ class ThreeSelectHandler {
 
     private static unselectMesh(mesh: Mesh): void {
         const userData = mesh.userData as MeshUserDataType;
-        mesh.material = new MeshStandardMaterial({ color: userData.color });
+        mesh.material = MaterialCache.getMaterial(userData.color);
         userData.selected = false;
     }
 
     private static selectMeshItem(mesh: Mesh): void {
         const userData = mesh.userData as MeshUserDataType;
-        mesh.material = new MeshStandardMaterial({ color: 'yellow' });
+        mesh.material = MaterialCache.getMaterial('yellow');
         userData.selected = true;
     }
 }
