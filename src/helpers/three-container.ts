@@ -1,7 +1,5 @@
 import { Scene, PerspectiveCamera, WebGLRenderer, Mesh, AmbientLight, DirectionalLight, Material, Color, Raycaster, Vector2 } from "three";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
-import GeometryPrimitiveAdder from "./geometry-primitive-adder";
-import EnumPrimitive from "../types/primitive.enum";
 import ThreeSelectHandler from "./three-select-handler";
 
 export default class ThreeContainer {

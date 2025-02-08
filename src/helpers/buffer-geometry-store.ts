@@ -21,7 +21,7 @@ class BufferGeometryStore {
     private static readonly pyramidVertices = new Float32Array([
         0, 0, 1, 1, 0, 1, 0.5, 1, 0.5,    // front
         0, 0, 1, 0.5, 1, 0.5, 0, 0, 0,    // left
-        1, 0, 0, 0, 0, 0,  0.5, 1, 0.5,    // back            
+        1, 0, 0, 0, 0, 0, 0.5, 1, 0.5,    // back            
         1, 0, 0, 0.5, 1, 0.5, 1, 0, 1,    // right
         1, 0, 1, 0, 0, 1, 1, 0, 0,        // bottom-1
         1, 0, 0, 0, 0, 1, 0, 0, 0,        // bottom-2
