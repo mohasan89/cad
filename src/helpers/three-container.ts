@@ -33,7 +33,6 @@ export default class ThreeContainer {
         this.sceneResize();
         this.setCameraInitialPositin();
         this.scene.background = new Color(0x171717)
-        setTimeout(() => { GeometryPrimitiveAdder.addGeometry(EnumPrimitive.Pyramid, 1, 1, 1, 5) }, 1000)
         this.animate();
 
         this.addCanvasListners();
