@@ -5,6 +5,8 @@ import { useCallback, useEffect, useState } from "react";
 import ThreeContainer from "../helpers/three-container";
 import SidebarButtonController from "./sidebar-button-controller";
 import { Mesh } from "three";
+import MeshListItem from "./mesh-list-item";
+import MeshUserDataType from "../types/mesh-usertype.type";
 
 const Sidebar = () => {
   const [meshes, setMeshes] = useState<Mesh[]>([]);
@@ -18,10 +20,6 @@ const Sidebar = () => {
     scene.addEventListener("childadded", getMeshesFromScene);
     scene.addEventListener("childremoved", getMeshesFromScene);
   }, []);
-
-  useEffect(() => {
-    console.log(meshes);
-  }, [meshes]);
 
   return (
     <Drawer
@@ -37,7 +35,15 @@ const Sidebar = () => {
       }}
     >
       <div className="flex flex-col h-full w-full justify-between">
-        <div className="grow bg-amber-300"></div>
+        <div className="grow overflow-auto">
+          {meshes.map((mesh) => (
+            <MeshListItem
+              mesh={mesh}
+              userData={mesh.userData as MeshUserDataType}
+              key={mesh.uuid}
+            />
+          ))}
+        </div>
         <div className="w-full p-5">
           <SidebarButtonController sceneMeshes={meshes} />
         </div>

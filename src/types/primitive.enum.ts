@@ -1,6 +1,6 @@
 enum EnumPrimitive {
-    Box = 'box',
-    Pyramid= 'pyramid'
+    Box = 'Box',
+    Pyramid= 'Pyramid'
 }
 
 export default EnumPrimitive

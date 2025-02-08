@@ -1,5 +1,7 @@
-import { Scene, PerspectiveCamera, WebGLRenderer, BoxGeometry, Mesh, MeshStandardMaterial, AmbientLight, DirectionalLight, Material } from "three";
+import { Scene, PerspectiveCamera, WebGLRenderer, Mesh, AmbientLight, DirectionalLight, Material } from "three";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
+import GeometryPrimitiveAdder from "./geometry-primitive-adder";
+import EnumPrimitive from "../types/primitive.enum";
 
 export default class ThreeContainer {
     private static instance: ThreeContainer;
@@ -29,7 +31,7 @@ export default class ThreeContainer {
 
         this.sceneResize();
         this.setCameraInitialPositin();
-        setTimeout(() => { this.addBox() }, 1000)
+        setTimeout(() => { GeometryPrimitiveAdder.addGeometry(EnumPrimitive.Box, 1, 1, 1, 100) }, 1000)
         this.animate();
 
         this.addCanvasListners();
@@ -65,13 +67,6 @@ export default class ThreeContainer {
         this.renderer.setSize(this.canvasRef.clientWidth, this.canvasRef.clientHeight)
     }
 
-    private addBox(): void {
-        const box = new BoxGeometry();
-        const material = new MeshStandardMaterial({ color: 0xff00f2 });
-        const mesh = new Mesh(box, material);
-        this.scene.add(mesh);
-    }
-
     private setCameraInitialPositin(): void {
         this.camera.position.set(0, 0, 15);
     }
@@ -91,9 +86,16 @@ export default class ThreeContainer {
     }
 
     private addLightSources(): void {
-        const ambientLight = new AmbientLight(0xffffff, 1)
-        const directionalLight = new DirectionalLight(0xffffff, 1)
-        directionalLight.position.set(5, 5, 20)
-        this.scene.add(ambientLight, directionalLight)
+        const ambientLight = new AmbientLight(0xffffff, 0.3);
+        const directionalLight = new DirectionalLight(0xffffff, 2);
+        directionalLight.position.set(100, 100, 100);
+        this.scene.add(ambientLight, directionalLight);
+        directionalLight.castShadow = true
+        directionalLight.shadow.camera.top = 200;
+        directionalLight.shadow.camera.bottom = - 200;
+        directionalLight.shadow.camera.left = - 200;
+        directionalLight.shadow.camera.right = 200;
+        directionalLight.shadow.camera.near = 1;
+        directionalLight.shadow.camera.far = 1000;
     }
 }

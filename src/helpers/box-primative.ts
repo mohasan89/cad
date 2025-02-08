@@ -3,7 +3,8 @@ import BufferGeometryStore from "./buffer-geometry-store";
 import EnumPrimitive from "../types/primitive.enum";
 
 class BoxPrimitive extends BasePrimitive {
-    protected bufferGeometry = BufferGeometryStore.getPrmitiveBufferGeometry(EnumPrimitive.Box)
+    protected bufferGeometry = BufferGeometryStore.getPrmitiveBufferGeometry(EnumPrimitive.Box);
+    protected defaultUserData = {'type': EnumPrimitive.Box};
 }
 
 export default BoxPrimitive
