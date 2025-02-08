@@ -24,7 +24,7 @@ const MeshListItemPosition = ({ mesh }: MeshListItemPropsType) => {
         mesh.position.set(xNum, yNum, zNum);
       }
     }
-  }, [x, y, z]);
+  }, [x, y, z, mesh]);
 
   return (
     <div className="w-full flex justify-start items-center py-2 gap-2">

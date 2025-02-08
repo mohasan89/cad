@@ -90,14 +90,14 @@ const AddPrimitiveForm = () => {
         </FormControl>
         <TextField
           id="count"
-          label="Count (max 1000)"
+          label="Count (max 100)"
           variant="outlined"
           fullWidth={true}
           type="number"
           sx={{ mb: "10px" }}
           value={count}
           onChange={(e) =>
-            setCount(Math.min(Math.round(Number(e.target.value)), 1000))
+            setCount(Math.min(Math.round(Number(e.target.value)), 100))
           }
         />
         <Button

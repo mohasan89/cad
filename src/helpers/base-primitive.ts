@@ -13,19 +13,19 @@ abstract class BasePrimitive {
 
     public addItemsToScene(length: number, width: number, height: number, itemsNumber: number): void {
         const typeCountNumber = this.getTypeCount()
+        const meshes: Mesh[] = []
         for (let i = 0; i < itemsNumber; i++) {
-            this.scene.add(this.getMesh(length, width, height,`${this.defaultUserData.type}-${typeCountNumber+i+1}`));
+            meshes.push(this.getMesh(length, width, height, `${this.defaultUserData.type}-${typeCountNumber + i + 1}`));
         }
+        this.scene.add(...meshes);
     }
 
-    private getMesh(length: number, width: number, depth: number,name: string): Mesh {
+    private getMesh(length: number, width: number, depth: number, name: string): Mesh {
         const color = RandomColorPicker.getRandomColor()
         const material = MaterialCache.getMaterial(color);
         const mesh = new Mesh(this.bufferGeometry, material);
         mesh.scale.set(length, width, depth);
-        mesh.receiveShadow = true;
-        mesh.castShadow = true;
-
+    
         mesh.position.set(...this.getRandomPosition(length, width, depth));
         mesh.userData = { ...this.defaultUserData, color, name } satisfies MeshUserDataType;
         return mesh;

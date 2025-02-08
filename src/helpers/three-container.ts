@@ -1,7 +1,8 @@
-import { Scene, PerspectiveCamera, WebGLRenderer, Mesh, AmbientLight, DirectionalLight, Material, Color } from "three";
+import { Scene, PerspectiveCamera, WebGLRenderer, Mesh, AmbientLight, DirectionalLight, Material, Color, Raycaster, Vector2 } from "three";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
 import GeometryPrimitiveAdder from "./geometry-primitive-adder";
 import EnumPrimitive from "../types/primitive.enum";
+import ThreeSelectHandler from "./three-select-handler";
 
 export default class ThreeContainer {
     private static instance: ThreeContainer;
@@ -32,7 +33,7 @@ export default class ThreeContainer {
         this.sceneResize();
         this.setCameraInitialPositin();
         this.scene.background = new Color(0x171717)
-        setTimeout(() => { GeometryPrimitiveAdder.addGeometry(EnumPrimitive.Box, 1, 1, 1, 5) }, 1000)
+        setTimeout(() => { GeometryPrimitiveAdder.addGeometry(EnumPrimitive.Pyramid, 1, 1, 1, 5) }, 1000)
         this.animate();
 
         this.addCanvasListners();
@@ -77,8 +78,7 @@ export default class ThreeContainer {
     }
 
     private setCameraInitialPositin(): void {
-        this.camera.position.set(20, 20, 20);
-        this.camera.lookAt(0, 0, 0)
+        this.camera.position.set(0, 0, 40);
     }
 
     private animate(): void {
@@ -93,6 +93,21 @@ export default class ThreeContainer {
         window.addEventListener('resize', () => {
             this.sceneResize()
         })
+
+        this.canvasRef?.addEventListener('mouseup', (e) => {
+            e.preventDefault();
+            const raycaster = new Raycaster();
+            const pointer = new Vector2();
+            const rect = this.renderer.domElement.getBoundingClientRect();
+            pointer.x = ((e.clientX - rect.left) / (rect.right - rect.left)) * 2 - 1;
+            pointer.y = - ((e.clientY - rect.top) / (rect.bottom - rect.top)) * 2 + 1;
+
+            raycaster.setFromCamera(pointer, this.camera);
+
+            const intersects = raycaster.intersectObjects(this.scene.children, true);
+            const mesh = intersects?.[0]?.object;
+            if (mesh instanceof Mesh) ThreeSelectHandler.selectMesh(mesh);
+        })
     }
 
     private addLightSources(): void {
@@ -100,12 +115,5 @@ export default class ThreeContainer {
         const directionalLight = new DirectionalLight(0xffffff, 2);
         directionalLight.position.set(100, 100, 100);
         this.scene.add(ambientLight, directionalLight);
-        directionalLight.castShadow = true
-        directionalLight.shadow.camera.top = 200;
-        directionalLight.shadow.camera.bottom = - 200;
-        directionalLight.shadow.camera.left = - 200;
-        directionalLight.shadow.camera.right = 200;
-        directionalLight.shadow.camera.near = 1;
-        directionalLight.shadow.camera.far = 1000;
     }
 }
