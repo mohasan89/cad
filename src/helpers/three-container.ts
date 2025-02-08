@@ -31,7 +31,7 @@ export default class ThreeContainer {
 
         this.sceneResize();
         this.setCameraInitialPositin();
-        setTimeout(() => { GeometryPrimitiveAdder.addGeometry(EnumPrimitive.Box, 1, 1, 1, 100) }, 1000)
+        setTimeout(() => { GeometryPrimitiveAdder.addGeometry(EnumPrimitive.Box, 1, 1, 1, 5) }, 1000)
         this.animate();
 
         this.addCanvasListners();
@@ -42,6 +42,14 @@ export default class ThreeContainer {
 
     public getMeshes(): Mesh[] {
         return this.scene.children.filter((child) => child instanceof Mesh);
+    }
+
+    public refresView(): void {
+        // refresh ideally should be done through state mangment like redux or zustand or 
+        // through reactive programing like rxjs but in the isntruction did not show if its possible 
+        const meshes = this.getMeshes()
+        this.scene.remove(...meshes)
+        this.scene.add(...meshes)
     }
 
     public resetScene(): void {

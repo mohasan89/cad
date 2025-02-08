@@ -13,11 +13,11 @@ abstract class BasePrimitive {
     public addItemsToScene(length: number, width: number, height: number, itemsNumber: number): void {
         const typeCountNumber = this.getTypeCount()
         for (let i = 0; i < itemsNumber; i++) {
-            this.scene.add(this.getMesh(length, width, height, `${this.defaultUserData.type}-${typeCountNumber + i + 1}`));
+            this.scene.add(this.getMesh(length, width, height,`${this.defaultUserData.type}-${typeCountNumber+i+1}`));
         }
     }
 
-    private getMesh(length: number, width: number, depth: number, name: string): Mesh {
+    private getMesh(length: number, width: number, depth: number,name: string): Mesh {
         const color = RandomColorPicker.getRandomColor()
         const material = this.getMaterial(color);
         const mesh = new Mesh(this.bufferGeometry, material);
@@ -40,7 +40,7 @@ abstract class BasePrimitive {
     };
 
     private getRandomValueBasedOnScatterVal(scatterScale: number): number {
-        return (Math.random() - 0.5) * 2 * scatterScale;
+        return Math.round((Math.random() - 0.5) * 2 * scatterScale);
     }
 
     private getTypeCount(): number {

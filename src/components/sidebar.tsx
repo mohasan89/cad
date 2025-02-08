@@ -19,7 +19,7 @@ const Sidebar = () => {
     const scene = ThreeContainer.getInstance().getScene();
     scene.addEventListener("childadded", getMeshesFromScene);
     scene.addEventListener("childremoved", getMeshesFromScene);
-  }, []);
+  }, [getMeshesFromScene]);
 
   return (
     <Drawer

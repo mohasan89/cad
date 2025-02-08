@@ -8,6 +8,7 @@ class ThreeSelectHandler {
         if (selecedMesh?.uuid === mesh.uuid) return;
         if (selecedMesh) this.unselectMesh(selecedMesh);
         this.selectMeshItem(mesh);
+        ThreeContainer.getInstance().refresView()
     }
 
 
