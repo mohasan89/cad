@@ -1,5 +1,3 @@
-import colors from 'tailwindcss/colors'
-
 class RandomColorPicker {
     private static readonly colors = [
         '#F87171', '#F97316', '#F59E0B', '#84CC16',
@@ -10,6 +8,10 @@ class RandomColorPicker {
 
     public static getRandomColor(): string {
         return RandomColorPicker.colors[Math.round(Math.random() * (RandomColorPicker.colors.length - 1))]
+    }
+
+    public static getAllColors(): string[] {
+        return this.colors;
     }
 }
 
